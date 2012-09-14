@@ -50,7 +50,7 @@
 	char path[50];
 
 	char buffer[30];
-	char msg[50];
+	char msg[57];
 	struct timeval tv;
 
 	time_t curtime;
@@ -133,7 +133,7 @@ void draw(charge_state_t charge_state, int percentage)
 		XSetForeground(disp, gcbar, out_foreground);  
 		XFillRectangle(disp, winbar, gcbar, 0, 0, bi_size, height-pos);
 	}
-	//XFlush(disp);
+	XFlush(disp);
 	DBG("End draw");
 
 	return;
@@ -186,7 +186,7 @@ void check(int signum)
 	} else {
 		return;
 	}
-	
+
 	draw(binfo->charge_state,binfo->percentage);
 	
 	DBG("End check");	
@@ -393,10 +393,10 @@ char* generate_message(battery_t *binfo)
 	return diagmsg;
 }
 
-void showdiagbox()
+char* showdiagbox()
 {
 	DBG("Start showdiagbox");
-	char* diagmsg;
+	char* diagmsg = NULL;
 	battery_t* binfo = NULL;
 
 	if(!lock){
@@ -404,7 +404,7 @@ void showdiagbox()
 		binfo = battery_check();
 		lock = false;
 	} else {
-		return;
+		return diagmsg;
 	}
 
 	// Get the right message
@@ -413,7 +413,7 @@ void showdiagbox()
 	osd = xosd_create (1);
 	if (osd == NULL){
 		fprintf(stderr,"Could not create \"osd\"");
-		return;
+		return diagmsg;
 	}
 
 	xosd_set_font (osd, "-adobe-helvetica-bold-r-normal-*-*-120-*-*-p-*-iso8859-1"); 
@@ -438,7 +438,7 @@ void showdiagbox()
 	xosd_display (osd, 0, XOSD_string, diagmsg);
 
 	DBG("End showdiagbox");
-	return; 
+	return diagmsg;
 }
 
 //--------------------------------------------- MAIN -----------------------------------------------------
@@ -482,6 +482,7 @@ int main(int argc, char **argv)
 	XEvent event;
 
 	char* execname = basename(argv[0]);
+    char* diagmsg = NULL;
 	// command line parser
 	while ((ch = getopt(argc, argv, "as:b:I:i:C:S:O:o:t:p:vhV:H:")) != -1) {
 		switch (ch) {
@@ -633,11 +634,13 @@ int main(int argc, char **argv)
 				break;
 				
 			case EnterNotify: // create battery status message
-				showdiagbox(binfo->charge_state,binfo->percentage);
+				diagmsg = showdiagbox();
 				break;
 				
 			case LeaveNotify: // destroy status window 
 				disposediagbox();
+                if (diagmsg)
+                    free(diagmsg);
 				break;
 			
 			case VisibilityNotify:
