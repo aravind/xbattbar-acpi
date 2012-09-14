@@ -1,0 +1,3 @@
+* configure & Makefile
+* battery_check call draw function only when percentage and ac_line change 
+* osd parameter: font, size

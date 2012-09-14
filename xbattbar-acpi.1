@@ -1,0 +1,44 @@
+.TH XBATTBAR-APCI "1" "June 2007" "xbattbar-acpi 0.4.0" "User Commands"
+.SH NAME
+xbattbar-acpi \- show battery status in X Window
+.SH SYNOPSIS
+usage: xbattbar-acpi [\-a] [\-b battery] [\-t sec] [\-s size] [\-I color] [\-O color] [\-i color] [\-o color] [\-p top | bottom | left | right] [-C osd text color] [-S osd text shadow's offset] [-V top | middle | bottom] [-H left | center | right]
+
+.SH DESCRIPTION
+.PP
+.B xbattbar-acpi
+shows the current (laptop) battery status in the X window environment. Battery status is obtained through the ACPI kernel module. The ACPI kernel module depends on your UNIX platform, therefore, consult your documentation for its detail.
+.PP
+.B
+xbattbar-acpi
+shows the status of the 
+.B -b 
+battery in a simple bar indicator. 
+.B -a
+option makes the indicator window keep always on top of your screen. The size of the indicator is 3 pixel in default but you can set the size as a parameter of 
+.B -s
+option. This indicator is appeared in the bottom of the display, as its default. The
+.B -p
+parameter permit to forces the status indicator to be at the top, left and right of the display.
+.PP
+In the case the AC line is on-line (plugged in), its color of the bar indicator consists of "green" and "olive drab" portions. The "green" portion shows its battery charging level. These colors can be changed by 
+.B -I
+and 
+.B -O 
+options. In the other case (AC line is off-line), the "red" portion of the bar indicator shows the percentage of its remaining battery level. The color conbination for the AC off-line case can be changed by 
+.B -i 
+and 
+.B -o 
+options.
+.PP
+If the mouse cursor enters in the status indicator, the diagnosis text appears in the center of the display, which shows AC line status, battery remaining level, charging or discharging time. This diagnosis window disappears if the mouse cursor leaves from the status indicator.
+.B -C
+option change the diagnosis text's color,
+.B -S
+option change the text shadow offset, 
+.B -V 
+and 
+.B -H 
+options change the vertical and horizontal text position, possible value are: top, middle and bottom for vertical position and left, right, center for horizontal position.
+.SH AUTHOR
+Matteo Marchesotti <matteo.marchesotti@fsfe.org>

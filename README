@@ -1,0 +1,42 @@
+RELEASE NOTES						     AGOUST 2007
+
+Matteo Marchesotti <matteo.marchesotti@fsfe.org>
+
+This directory contains source for the X11 version of xbattbar-acpi
+which is a (laptop) battery status indicator.
+
+* Version
+
+The release version of this xbattbar is 0.4.0
+
+* Supported platform
+
+I test this program on:
+
+	Linux		2.6
+
+* Dependencies
+  
+  - X11
+  - libacpi (http://ngolde.de/libacpi.html)
+  - libxosd
+
+* Installation Procedure
+
+It's almost the same as cases for normal X window applications:
+
+make
+make install
+
+* Known bugs and installation hints
+
+Not tested on laptop with two batteries.
+
+* Comments, Suggestions, and Bug Reports
+
+Please send e-mail to Matteo Marchesotti <matteo.marchesotti@fsfe.org>
+
+* Developers
+
+Matteo Marchesotti <matteo.marchesotti@fsfe.org>
+
